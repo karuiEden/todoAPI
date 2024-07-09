@@ -10,6 +10,10 @@ type NewTask struct {
 	Name string `json:"name" binding:"required"`
 }
 
+type UpdateTask struct {
+	IsCompleted bool `json:"isCompleted"`
+}
+
 func GetAllTodos(c *gin.Context) {
 	var todos []models.TodoUnit
 	models.DB.Debug().Find(&todos)
@@ -43,11 +47,12 @@ func CompleteTask(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	var isDone bool
-	if err := c.ShouldBind(&task); err != nil {
+	var isDone UpdateTask
+	if err := c.ShouldBindJSON(&isDone); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	models.DB.Debug().Model(&task).Update("is_completed", isDone)
+	models.DB.Debug().Model(&task).Update("is_completed", isDone.IsCompleted)
+
 	c.JSON(http.StatusOK, task)
 }
