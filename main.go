@@ -19,9 +19,9 @@ func main() {
 	models.SetupDB()
 	router.GET("/tasks", controllers.GetAllTodos)
 	router.GET("/tasks/:id", controllers.GetTask)
-	//router.DELETE("/tasks/:id", controllers.DeleteTask)
 	router.POST("/tasks", controllers.CreateTask)
 	router.PATCH("/tasks/:id", controllers.CompleteTask)
+	router.DELETE("/tasks/:id", controllers.DeleteTask)
 	err := router.Run("localhost:8080")
 	if err != nil {
 		return

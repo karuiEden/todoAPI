@@ -56,3 +56,13 @@ func CompleteTask(c *gin.Context) {
 
 	c.JSON(http.StatusOK, task)
 }
+
+func DeleteTask(c *gin.Context) {
+	var task models.TodoUnit
+	if err := models.DB.Debug().Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	models.DB.Debug().Model(&task).Delete(&task)
+	c.JSON(http.StatusOK, task)
+}
