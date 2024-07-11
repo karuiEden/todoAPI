@@ -23,7 +23,7 @@ func SetupDB() {
 		},
 	)
 
-	dsn := "host=77.221.138.234 user=karui password=edennotexist dbname=lasql port=5432 sslmode=disable TimeZone=Europe/Moscow"
+	dsn := parseEnv()
 	db, errDB := gorm.Open(postgres.Open(dsn), &gorm.Config{Logger: newLogger})
 	if errDB != nil {
 		panic("failed to connect database")
@@ -33,4 +33,14 @@ func SetupDB() {
 		panic(errMig)
 	}
 	DB = db
+}
+
+func parseEnv() (res string) {
+	host := os.Getenv("HOST_BD")
+	user := os.Getenv("USER_BD")
+	password := os.Getenv("PASSWORD_BD")
+	database := os.Getenv("DATABASE_BD")
+	port := os.Getenv("PORT_BD")
+	res = "host=" + host + " user=" + user + " password=" + password + " dbname=" + database + " port=" + port + " sslmode=disable TimeZone=Europe/Moscow"
+	return res
 }
