@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 	"gorm.io/gorm/logger"
@@ -42,5 +43,6 @@ func parseEnv() (res string) {
 	database := os.Getenv("DATABASE_BD")
 	port := os.Getenv("PORT_BD")
 	res = "host=" + host + " user=" + user + " password=" + password + " dbname=" + database + " port=" + port + " sslmode=disable TimeZone=Europe/Moscow"
+	fmt.Println(res)
 	return res
 }
