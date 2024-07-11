@@ -23,7 +23,7 @@ func SetupDB() {
 		},
 	)
 
-	dsn := "host=77.221.138.234 user=karui password=edennotexist dbname=lasql port=5432 sslmode=disable TimeZone=Europe/Moscow"
+	dsn := "host=* user=* password=* dbname=* port=* sslmode=disable TimeZone=Europe/Moscow"
 	db, errDB := gorm.Open(postgres.Open(dsn), &gorm.Config{Logger: newLogger})
 	if errDB != nil {
 		panic("failed to connect database")
